@@ -1,5 +1,5 @@
 import { useLocation, Link } from "react-router-dom";
-import { Home, Users, Bell, User, Plus } from "lucide-react";
+import { Home, Users, Bell, User , Plus  } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import NotificationBadge from "../Common/NotificationBadge";
@@ -10,10 +10,8 @@ import { useLanguage } from "@/Context/LanguageContext";
 
 
 
-
-
-
 export const MobileNav = () => {
+
 
   // Language
   const { t } = useLanguage();
@@ -25,9 +23,9 @@ export const MobileNav = () => {
 
   // Navigation items
   const navItems = [
-    { name: t("feed"), path: "/feed", icon: Home },
-    { name: t("people"), path: "/people", icon: Users },
-    { name: t("new"), path: "/create", icon: Plus },
+    { name: t("home"), path: "/", icon: Home },
+    { name: t("explore"), path: "/people", icon: Users },
+    { name: t("create"), path: "/create", icon: Plus  },
     { name: t("notifications"), path: "/notifications", icon: Bell },
     { name: t("profile"), path: "/profile", icon: User },
   ];
@@ -37,7 +35,7 @@ export const MobileNav = () => {
 
 
     <motion.nav
-      className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-sidebar border-t border-border/30 z-10 backdrop-blur-sm transition-all duration-300 ease-in-out"
+      className="md:hidden bg-background  fixed bottom-0 left-0 right-0 h-16 border-t border-border/30 z-10 transition-all duration-300 ease-in-out"
       initial={{ y: 100 }}
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 260, damping: 20 }}
@@ -62,7 +60,7 @@ export const MobileNav = () => {
               whileTap={{ scale: 0.95 }}
             >
 
-              {item.name === "New" ? (
+              {item.name === "Create" ? (
                 <motion.div
                   className="bg-primary w-12 h-12 rounded-full flex items-center justify-center -mt-6 shadow-md"
                   whileHover={{
@@ -133,21 +131,6 @@ export const MobileNav = () => {
                   )}
 
             </motion.div>
-
-            {/* {item.name !== "New" && (
-              <motion.span
-                className={cn(
-                  "text-xs mt-1",
-                  location.pathname === item.path ? "font-medium" : ""
-                )}
-                animate={{
-                  scale: location.pathname === item.path ? 1.05 : 1,
-                  opacity: location.pathname === item.path ? 1 : 0.8
-                }}
-              >
-                {item.name}
-              </motion.span>
-            )} */}
 
           </Link>
 

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Search, UserPlus, UserCheck, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import SuspenseLoader from "../components/Common/SuspenseLoader";
+import SuspenseLoader from "../components/Loaders/SuspenseLoader";
 
 
 

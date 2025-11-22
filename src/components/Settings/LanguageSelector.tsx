@@ -1,18 +1,13 @@
-
 import { useState } from "react";
 import { Globe, Check } from "lucide-react";
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogDescription
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "../../Context/LanguageContext";
 import { SettingsItem } from "./SettingsItem";
 import { motion } from "framer-motion";
+
+
 
 export const LanguageSelector = () => {
 

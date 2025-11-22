@@ -49,7 +49,7 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.145 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.7 0.26 22.5);
+  --primary: #ff314c;
   /* Slightly brighter for dark mode */
   --primary-foreground: oklch(0.145 0 0);
   /* Ensure contrast */
@@ -118,6 +118,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -127,7 +128,6 @@
     @apply bg-background text-foreground;
   }
 }
-
 
 @layer components {
   .glass-card {
@@ -164,18 +164,16 @@
   }
 }
 
-
 ::selection {
-  background: black;
+  background: #ff314c;
   /* background color for the selected text */
   color: white;
   /* text color for the selected text */
 }
 
-
 /* For WebKit browsers */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
   /* width of the scrollbar */
 }
 
@@ -197,9 +195,15 @@
   /* color when hovering over the thumb */
 }
 
-
-
-
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: #fff !important;
+  /* text color */
+  transition: background-color 5000s ease-in-out 0s;
+}
 
 @keyframes floatSlow {
 
@@ -250,4 +254,10 @@
 .animate-wave-delayed {
   animation: wave 15s ease-in-out infinite;
   animation-delay: 7.5s;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
