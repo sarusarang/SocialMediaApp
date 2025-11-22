@@ -6,6 +6,7 @@ interface NotificationBadgeProps {
 }
 
 const NotificationBadge = ({ count, className }: NotificationBadgeProps) => {
+    
     if (count <= 0) return null;
 
     return (

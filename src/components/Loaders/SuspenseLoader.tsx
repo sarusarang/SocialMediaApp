@@ -58,7 +58,7 @@ export const SuspenseLoader = ({
                 duration: 0.8,
                 repeat: Infinity,
                 ease: "easeInOut",
-            },
+            } as const,
         },
     };
 

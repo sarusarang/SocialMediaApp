@@ -1,44 +1,40 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-    Moon,
-    Bell,
-    Lock,
-    HelpCircle,
-    Info,
-    Smartphone,
-    UserCog,
-    LogOut
-} from "lucide-react";
-import { useTheme } from "../Context/ThemeContext";
-import { Switch } from "@/components/ui/switch";
-import { Button } from "@/components/ui/button";
-import {
-    Card,
-    CardHeader,
-    CardTitle,
-    CardDescription
-} from "@/components/ui/card";
 import { toast } from "sonner";
 import { useLanguage } from "./../Context/LanguageContext";
+import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
 import { LanguageSelector } from "../components/Settings/LanguageSelector";
 import { SettingsSection } from "../components/Settings/SettingsSelections";
 import { SettingsItem } from "../components/Settings/SettingsItem";
+import { Bell, Lock, HelpCircle, Info, Smartphone, UserCog, LogOut, Loader2 } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { useAuthContext } from "@/Context/AuthContext";
+
+
+
+
+
+
 
 const Settings = () => {
 
 
-    // Access the theme context
-    const { toggleTheme, theme } = useTheme();
+
+    // Access the auth context for logout
+    const { logoutHandler, isLogoutPending } = useAuthContext();
+
 
 
     // Access the language context
     const { t } = useLanguage();
 
 
+
     const [notificationsEnabled, setNotificationsEnabled] = useState(true);
     const [autoPlayVideos, setAutoPlayVideos] = useState(true);
     const [dataUsageReduced, setDataUsageReduced] = useState(false);
+
 
 
     const toggleNotifications = () => {
@@ -50,7 +46,9 @@ const Settings = () => {
     };
 
 
+
     return (
+
 
         <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -58,6 +56,7 @@ const Settings = () => {
             transition={{ duration: 0.3 }}
             className="pb-2 md:pb-6"
         >
+
 
             <Card className="shadow-sm mb-6">
                 <CardHeader className="pb-3">
@@ -71,8 +70,12 @@ const Settings = () => {
                 </CardHeader>
             </Card>
 
+
+
             <div className="grid gap-6">
 
+
+                {/* ACCOUNT */}
                 <SettingsSection title={t("account")} icon={<UserCog className="h-5 w-5" />}>
 
                     <SettingsItem
@@ -90,21 +93,12 @@ const Settings = () => {
 
                     <LanguageSelector />
 
-                    <SettingsItem
-                        icon={<Moon className="h-5 w-5" />}
-                        title={t("darkMode")}
-                        subtitle={theme === "dark" ? "On" : "Off"}
-                        onClick={() => { }}
-                        action={
-                            <Switch
-                                className="hover:cursor-pointer"
-                                checked={theme === "dark"}
-                                onCheckedChange={toggleTheme}
-                            />
-                        }
-                    />
+
                 </SettingsSection>
 
+
+
+                {/* PRIVACY & SECURITY */}
                 <SettingsSection title={t("privacySecurity")} icon={<Lock className="h-5 w-5" />}>
 
                     <SettingsItem
@@ -128,8 +122,12 @@ const Settings = () => {
 
                         }}
                     />
+
                 </SettingsSection>
 
+
+
+                {/* APP PREFERENCES */}
                 <SettingsSection title={t("appPreferences")} icon={<Smartphone className="h-5 w-5" />}>
 
                     <SettingsItem
@@ -161,6 +159,9 @@ const Settings = () => {
 
                 </SettingsSection>
 
+
+
+                {/* SUPPORT */}
                 <SettingsSection title={t("support")} icon={<HelpCircle className="h-5 w-5" />}>
                     <SettingsItem
                         icon={<HelpCircle className="h-5 w-5" />}
@@ -177,20 +178,31 @@ const Settings = () => {
                         icon={<Info className="h-5 w-5" />}
                         title={t("about")}
                         subtitle={t("version")}
-                        onClick={() => { toast(t("App Version"), { description: (t ("version")) }) }}
+                        onClick={() => { toast(t("App Version"), { description: (t("version")) }) }}
                     />
                 </SettingsSection>
 
-                <Button 
-                    className="mt-0 sm:w-52 hover:cursor-pointer"
+
+                {/* LOGOUT */}
+                <Button
+                    className="mt-0 sm:w-52 hover:cursor-pointer bg-red-600 hover:bg-red-700"
+                    disabled={isLogoutPending}
+                    onClick={logoutHandler}
                 >
-                    <LogOut className="h-5 w-5 mr-2" />
+                    {isLogoutPending ? <Loader2 className="h-5 w-5 mr-2 animate-spin" /> : <LogOut className="h-5 w-5 mr-2" />}
                     {t("logout")}
                 </Button>
 
+
             </div>
+
+
         </motion.div>
+
+
     );
+
 };
+
 
 export default Settings;

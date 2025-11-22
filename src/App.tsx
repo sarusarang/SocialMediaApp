@@ -1,13 +1,16 @@
 import { Route, Routes } from "react-router-dom"
 import { Suspense, lazy } from "react"
-import SuspenseLoader from "./components/Common/SuspenseLoader"
+import SuspenseLoader from "./components/Loaders/SuspenseLoader"
+import { ProtectedAuthRoute } from "./routes/ProtectedAuth"
 import { Toaster } from "sonner"
 
 
-const Layout = lazy(() => import("./components/Layout/Layout"))
-const Landing = lazy(() => import("./Pages/Landing"))
+
+
+// Lazy loading pages
 const Feed = lazy(() => import("./Pages/Feed"))
 const Auth = lazy(() => import("./Pages/Auth"))
+const ForgotPassword = lazy(() => import("./Pages/ForgotPassword"))
 const Profile = lazy(() => import("./Pages/Profile"))
 const UsersProfile = lazy(() => import("./Pages/UsersProfile"))
 const EditProfile = lazy(() => import("./Pages/EditProfile"))
@@ -16,6 +19,17 @@ const Notifcation = lazy(() => import("./Pages/Notification"))
 const CreatePost = lazy(() => import("./Pages/CreatePost"))
 const Settings = lazy(() => import("./Pages/Settings"))
 const NotFound = lazy(() => import("./Pages/NotFound"))
+
+
+
+
+// lazy loading layout
+const MainLayout = lazy(() => import("./components/Layout/MainLayout"))
+const AuthLayout = lazy(() => import("./components/Layout/AuthLayout"))
+
+
+
+
 
 function App() {
 
@@ -27,44 +41,56 @@ function App() {
 
       <Suspense fallback={<SuspenseLoader fullScreen text="Loading..." />}>
 
+
         <Routes>
 
-          <Route element={<Layout />} >
 
-            <Route path="/" element={<Landing />} />
+          {/* Main Layout */}
+          <Route element={<ProtectedAuthRoute><MainLayout /> </ProtectedAuthRoute>} >
 
-            <Route path="/feed" element={<Suspense fallback={<SuspenseLoader fullScreen text="Loading feed..." />} ><Feed /></Suspense>} />
+            <Route index element={<Feed />} />
 
-            <Route path="/profile" element={<Suspense fallback={<SuspenseLoader fullScreen text="Loading profile..." />} ><Profile /></Suspense>} />
+            <Route path="profile" element={<Profile />} />
 
-            <Route path="/userprofile/:username" element={<Suspense fallback={<SuspenseLoader fullScreen text="Loading profile..." />} ><UsersProfile /></Suspense>} />
+            <Route path="userprofile/:username" element={<UsersProfile />} />
 
-            <Route path="/edit-profile" element={<Suspense fallback={<SuspenseLoader fullScreen text="Loading profile..." />} ><EditProfile /></Suspense>} />
+            <Route path="edit-profile" element={<EditProfile />} />
 
-            <Route path="/people" element={<Suspense fallback={<SuspenseLoader fullScreen text="Loading people..." />} ><PeoplePage /></Suspense>} />
+            <Route path="people" element={<PeoplePage />} />
 
-            <Route path="/create" element={<Suspense fallback={<SuspenseLoader fullScreen text="Loading..." />} ><CreatePost /></Suspense>} />
+            <Route path="create" element={<CreatePost />} />
 
-            <Route path="/notifications" element={<Suspense fallback={<SuspenseLoader fullScreen text="Loading Notifications..." />} ><Notifcation /></Suspense>} />
+            <Route path="notifications" element={<Notifcation />} />
 
-            <Route path="/settings" element={<Suspense fallback={<SuspenseLoader fullScreen text="Loading settings..." />} ><Settings /></Suspense>} />
+            <Route path="settings" element={<Settings />} />
 
           </Route>
 
-          <Route path="/auth" element={<Auth />} />
 
+          {/* Auth Layout */}
+          <Route element={<AuthLayout />} >
+
+            <Route path="auth" element={<Auth />} />
+
+            <Route path="forgot-password" element={<ForgotPassword />} />
+
+          </Route>
+
+
+          {/* 404 */}
           <Route path="*" element={<NotFound />} />
+
 
         </Routes>
 
+
         <Toaster />
+
 
       </Suspense>
 
 
-
     </>
-
 
   )
 }
